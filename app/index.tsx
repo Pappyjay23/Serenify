@@ -1,4 +1,4 @@
-import { Text, View, ImageBackground, Image } from "react-native";
+import { Text, View, ImageBackground, Image, StatusBar } from "react-native";
 import HomeBackground from "@/assets/images/meditation-nature.png";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MeditationPose from "@/assets/images/meditation-pose.png";
@@ -22,11 +22,12 @@ export default function HomeScreen() {
 					</View>
 					<Image source={MeditationPose} resizeMode="contain" className='mt-[100px] w-[300px] h-[300px] mx-auto' />
 					<View className="mt-[50px]">
-						<CustomButton />
+						<CustomButton title="Get Started" onPress={() => {}} />
 					</View>
 				</SafeAreaView>
 			</ImageBackground>
 			<View style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}></View>
+			{/* <StatusBar barStyle="dark-content" /> */}
 		</View>
 	);
 }

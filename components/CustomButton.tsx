@@ -1,10 +1,17 @@
-import { View, Text } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
-const CustomButton = () => {
+interface CustomButtonProps {
+	title: string;
+	onPress: () => void;
+    buttonStyles?: string;
+    textStyles?: string;
+}
+
+const CustomButton = ({ onPress, title, buttonStyles, textStyles }: CustomButtonProps) => {
 	return (
-		<View className="w-full p-4 bg-transparentq border-white border rounded-lg justify-center items-center">
-			<Text className="text-white font-pregular">Get Started</Text>
-		</View>
+		<TouchableOpacity activeOpacity={0.8} onPress={onPress} className={`w-full p-4 bg-transparent border-white border rounded-lg justify-center items-center ${buttonStyles}`}>
+			<Text className={`text-white font-psemibold ${textStyles}`}>{title}</Text>
+		</TouchableOpacity>
 	);
 };
 
