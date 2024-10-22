@@ -49,11 +49,11 @@ const Affirmations = () => {
 
 					<View className='justify-center items-center mb-5'>
 						<ScrollView showsVerticalScrollIndicator className='w-full'>
-							<View className='bg-[#fff] rounded-lg p-4 flex flex-col space-y-3 w-[80%] mx-auto h-full overflow-y-scroll'>
-								<Text className='text-4xl font-hlight text-[#0E4351]'>
+							<View className='bg-[#fff]/20 border-[#fff] border rounded-lg p-4 flex flex-col space-y-3 w-[80%] mx-auto h-full overflow-y-scroll'>
+								<Text className='text-4xl font-hlight text-[#fff]'>
 									{quote}
 								</Text>
-								<Text className='text-4xl font-hmedium text-[#0E4351]'>
+								<Text className='text-4xl font-hmedium text-[#fff]'>
 									{author}
 								</Text>
 							</View>
