@@ -3,8 +3,10 @@ import HomeBackground from "@/assets/images/meditation-nature.png";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MeditationPose from "@/assets/images/meditation-pose.png";
 import CustomButton from "@/components/CustomButton";
+import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
+	const router = useRouter();
 	return (
 		<View className='flex-1'>
 			<ImageBackground
@@ -22,7 +24,7 @@ export default function HomeScreen() {
 					</View>
 					<Image source={MeditationPose} resizeMode="contain" className='mt-[100px] w-[300px] h-[300px] mx-auto' />
 					<View className="mt-[50px]">
-						<CustomButton title="Get Started" onPress={() => {}} />
+						<CustomButton title="Get Started" onPress={() => router.push('/meditate-category')} />
 					</View>
 				</SafeAreaView>
 			</ImageBackground>

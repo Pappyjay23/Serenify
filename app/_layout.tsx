@@ -15,6 +15,11 @@ const RootLayout = () => {
 		"Poppins-ExtraBold": require("../assets/fonts/poppins/Poppins-ExtraBold.ttf"),
 		"Poppins-Bold": require("../assets/fonts/poppins/Poppins-Bold.ttf"),
 		"Poppins-Black": require("../assets/fonts/poppins/Poppins-Black.ttf"),
+		"Helvetica-Neue-Light": require("../assets/fonts/helvetica/HelveticaNeueLight.otf"),
+		"Helvetica-Neue-Medium": require("../assets/fonts/helvetica/HelveticaNeueMedium.otf"),
+		"Helvetica-Neue-Heavy": require("../assets/fonts/helvetica/HelveticaNeueHeavy.otf"),
+		"Helvetica-Neue-Bold": require("../assets/fonts/helvetica/HelveticaNeueBold.otf"),
+		"Helvetica-Neue-Black": require("../assets/fonts/helvetica/HelveticaNeueBlack.otf"),
 	});
 
 	useEffect(() => {
@@ -27,6 +32,7 @@ const RootLayout = () => {
 	return (
 		<Stack>
 			<Stack.Screen name='index' options={{ headerShown: false }} />
+			<Stack.Screen name='meditate-category' options={{ headerShown: false }} />
 		</Stack>
 	);
 };
