@@ -1,26 +1,25 @@
-import { useRouter } from "expo-router";
+import BetterSleepImg from '@/assets/images/better-sleep.png';
+import ImprovePerformanceImg from "@/assets/images/improve-performance.png";
+import IncreaseHappiness from '@/assets/images/increase-happiness.png';
+import PersonalGrowthImg from '@/assets/images/personal-growth.png';
+import ReduceAnxietyImg from "@/assets/images/reduce-anxiety.png";
+import ReduceStressImg from "@/assets/images/reduce-stress.png";
 import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ReduceStressImg from "@/assets/images/reduce-stress.png";
-import ImprovePerformanceImg from "@/assets/images/improve-performance.png";
-import ReduceAnxietyImg from "@/assets/images/reduce-anxiety.png";
-import BetterSleepImg from '@/assets/images/better-sleep.png';
-import PersonalGrowthImg from '@/assets/images/personal-growth.png';
-import IncreaseHappiness from '@/assets/images/increase-happiness.png';
 
 export default function MeditateCategoryScreen() {
-	const router = useRouter();
 	return (
 		<View className='flex-1 bg-[#0E4351]'>
 			<SafeAreaView className='p-4 relative h-screen z-10'>
 				<View className='pt-[10px]'>
 					<Text className='text-3xl font-hlight text-white'>
-						What Brings you
+						Welcome to 
+						{/* <Text className='text-3xl font-hmedium text-white'> Serenify</Text> */}
 					</Text>
-					<Text className='text-3xl font-hmedium text-white'>to Serenify?</Text>
+					<Text className='text-3xl font-hmedium text-white'>Serenify</Text>
 
 					<Text className='font-hlight text-white my-4 text-sm'>
-						Choose a category to focus on.
+						Choose a category to aid your meditation.
 					</Text>
 				</View>
 
