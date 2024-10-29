@@ -7,6 +7,7 @@ import { meditateCategory } from "@/constants/MeditationData";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import * as Progress from "react-native-progress";
 
 interface TimerState {
 	isRunning: boolean;
@@ -78,6 +79,9 @@ const Meditate = () => {
 		}
 	}, [timerState.timeInSeconds, handleTimerComplete]);
 
+	// Calculate progress percentage
+	const progress = (600 - timerState.timeInSeconds) / 600;
+
 	return (
 		<View
 			style={{ backgroundColor: meditateData.colorTheme }}
@@ -101,15 +105,26 @@ const Meditate = () => {
 				</View>
 
 				<View className='mt-8 space-y-4'>
-					<Pressable
-						onPress={toggleTimer}
-						className='bg-slate-100 rounded-full w-[200px] h-[200px] p-8 mx-auto flex flex-col justify-center items-center'>
-						<Text
-							style={{ color: meditateData.colorTheme }}
-							className='text-center font-pbold text-[55px]'>
-							{formatTime(timerState.timeInSeconds)}
-						</Text>
-					</Pressable>
+					<View className='relative flex flex-row justify-center '>
+						<Progress.Circle
+							borderColor='#e0e0e0'
+							size={220}
+							progress={progress}
+							thickness={10}
+							color={meditateData.colorTheme}
+							unfilledColor='#e0e0e0'
+							
+						/>
+						<Pressable
+							onPress={toggleTimer}
+							className='bg-slate-100 rounded-full w-[200px] h-[200px] p-8 mx-auto flex flex-col justify-center items-center absolute top-[10] left-[19.5%]'>
+							<Text
+								style={{ color: meditateData.colorTheme }}
+								className='text-center font-pbold text-[50px]'>
+								{formatTime(timerState.timeInSeconds)}
+							</Text>
+						</Pressable>
+					</View>
 
 					<View className='flex flex-row space-x-4 items-center justify-center'>
 						<Pressable

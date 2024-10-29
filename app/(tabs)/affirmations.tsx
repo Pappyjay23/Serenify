@@ -4,16 +4,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
 
 const Affirmations = () => {
-	const [quote, setQuote] = useState(
+	const [quote, setQuote] = useState<string>(
 		"When the purpose of a thing is not known, abuse is inevitable."
 	);
-	const [author, setAuthor] = useState("Albert Einstein.");
-	const [isQuoteLoading, setIsQuoteLoading] = useState(false);
+	const [author, setAuthor] = useState<string>("Albert Einstein.");
+	const [isQuoteLoading, setIsQuoteLoading] = useState<boolean>(false);
 
-	const [affirmation, setAffirmation] = useState(
+	const [affirmation, setAffirmation] = useState<string>(
 		"You are better than you think."
 	);
-	const [isAffirmationLoading, setIsAffirmationLoading] = useState(false);
+	const [isAffirmationLoading, setIsAffirmationLoading] = useState<boolean>(false);
 
 	const getQuote = async () => {
 		setIsQuoteLoading(true);

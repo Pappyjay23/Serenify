@@ -18,11 +18,11 @@ export default function MeditateCategoryScreen() {
 		<View className='flex-1 bg-[#0E4351]'>
 			<SafeAreaView className='p-4 relative h-screen z-10'>
 				<View className='pt-[10px]'>
-					<Text className='text-3xl font-hlight text-white'>
+					<Text className='text-2xl font-hlight text-white'>
 						Welcome to
 						{/* <Text className='text-3xl font-hmedium text-white'> Serenify</Text> */}
 					</Text>
-					<Text className='text-3xl font-hmedium text-white'>Serenify</Text>
+					<Text className='text-4xl font-hmedium text-white'>Serenify</Text>
 
 					<Text className='font-hlight text-white my-4 text-sm'>
 						Choose a category to aid your meditation.
