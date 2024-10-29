@@ -8,6 +8,7 @@ import Fontisto from "@expo/vector-icons/Fontisto";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import * as Progress from "react-native-progress";
+import { Audio } from "expo-av";
 
 interface TimerState {
 	isRunning: boolean;
@@ -29,13 +30,47 @@ const Meditate = () => {
 
 	const [timerState, setTimerState] = useState<TimerState>({
 		isRunning: false,
-		timeInSeconds: 600, // 10 minutes default
+		timeInSeconds: 60, // Default time in seconds
 	});
+
+	const [sound, setSound] = useState<Audio.Sound | null>(null);
+
+	// Load audio when the component mounts
+	useEffect(() => {
+		const loadSound = async () => {
+			const { sound } = await Audio.Sound.createAsync(
+				meditateData.audio,
+				{ shouldPlay: false, isLooping: true } // Enable looping
+			);
+			setSound(sound);
+		};
+		loadSound();
+
+		return () => {
+			// Unload the sound when component unmounts
+			sound && sound.unloadAsync();
+		};
+	}, [meditateData.audio]);
+
+	// Play, pause, and stop audio based on timer state
+	const handleAudioPlayback = useCallback(async () => {
+		if (!sound) return;
+
+		if (timerState.isRunning) {
+			await sound.playAsync();
+		} else {
+			await sound.pauseAsync();
+		}
+	}, [timerState.isRunning, sound]);
+
+	useEffect(() => {
+		handleAudioPlayback();
+	}, [handleAudioPlayback]);
 
 	const resetTimer = useCallback(() => {
 		setTimerState({
 			isRunning: false,
-			timeInSeconds: 600,
+			timeInSeconds: 60,
 		});
 	}, []);
 
@@ -69,7 +104,7 @@ const Meditate = () => {
 	}, [timerState.isRunning]);
 
 	const handleTimerComplete = useCallback(() => {
-		// Add any completion logic here (e.g., playing a sound, showing an alert)
+		sound && sound.stopAsync();
 		console.log("Meditation complete!");
 	}, []);
 
@@ -80,7 +115,7 @@ const Meditate = () => {
 	}, [timerState.timeInSeconds, handleTimerComplete]);
 
 	// Calculate progress percentage
-	const progress = (600 - timerState.timeInSeconds) / 600;
+	const progress = (60 - timerState.timeInSeconds) / 60;
 
 	return (
 		<View
@@ -113,7 +148,6 @@ const Meditate = () => {
 							thickness={10}
 							color={meditateData.colorTheme}
 							unfilledColor='#e0e0e0'
-							
 						/>
 						<Pressable
 							onPress={toggleTimer}
