@@ -8,18 +8,23 @@ const TabsLayout = () => {
 		<Tabs
 			screenOptions={{
 				headerShown: false,
-				tabBarActiveTintColor: "#fff",
-				tabBarActiveBackgroundColor: "#0E4351",
-				tabBarStyle: { backgroundColor: "#0E4351", paddingBottom: 4 },
+				tabBarActiveTintColor: "#ffffff",
+				tabBarInactiveTintColor: "#ffffffbe",
+				tabBarStyle: { backgroundColor: "#07232a", paddingBottom: 2 },
+				tabBarLabelStyle: {
+					fontSize: 8,
+					marginBottom: 5,
+					fontFamily: 'Helvetica-Neue-Light',
+				  },
 			}}>
 			<Tabs.Screen
 				name='meditate-category'
 				options={{
 					tabBarLabel: "Meditate",
-					tabBarIcon: ({ color }) => (
+					tabBarIcon: ({ color, focused }) => (
 						<MaterialCommunityIcons
 							name='flower-tulip'
-							size={24}
+							size={focused ? 24 : 18}
 							color={color}
 						/>
 					),
@@ -29,8 +34,8 @@ const TabsLayout = () => {
 				name='affirmations'
 				options={{
 					tabBarLabel: "Affirmations",
-					tabBarIcon: ({ color }) => (
-						<Entypo name='open-book' size={24} color={color} />
+					tabBarIcon: ({ color, focused }) => (
+						<Entypo name='open-book' size={focused ? 24 : 18} color={color} />
 					),
 				}}
 			/>

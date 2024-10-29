@@ -7,7 +7,6 @@ import { meditateCategory } from "@/constants/MeditationData";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import CustomButton from "@/components/CustomButton";
 
 interface TimerState {
 	isRunning: boolean;
@@ -25,7 +24,7 @@ const formatTime = (timeInSeconds: number): string => {
 const Meditate = () => {
 	const router = useRouter();
 	const { id } = useLocalSearchParams();
-	const meditate = meditateCategory[Number(id) - 1];
+	const meditateData = meditateCategory[Number(id) - 1];
 
 	const [timerState, setTimerState] = useState<TimerState>({
 		isRunning: false,
@@ -81,7 +80,7 @@ const Meditate = () => {
 
 	return (
 		<View
-			style={{ backgroundColor: meditate.colorTheme }}
+			style={{ backgroundColor: meditateData.colorTheme }}
 			className='flex-1 relative'>
 			<SafeAreaView className='p-4 relative h-screen z-10'>
 				<Pressable className='mb-4' onPress={() => router.back()}>
@@ -91,13 +90,13 @@ const Meditate = () => {
 				<View className='bg-slate-100 rounded-full w-[200px] h-[200px] p-8 mx-auto flex flex-col justify-center items-center'>
 					<Image
 						resizeMode='contain'
-						source={meditate.image}
+						source={meditateData.image}
 						className='w-[100px] h-[100px] mb-1'
 					/>
 					<Text
-						style={{ color: meditate.colorTheme }}
+						style={{ color: meditateData.colorTheme }}
 						className='text-center font-psemibold text-base tracking-tighter'>
-						{meditate.name}
+						{meditateData.name}
 					</Text>
 				</View>
 
@@ -106,7 +105,7 @@ const Meditate = () => {
 						onPress={toggleTimer}
 						className='bg-slate-100 rounded-full w-[200px] h-[200px] p-8 mx-auto flex flex-col justify-center items-center'>
 						<Text
-							style={{ color: meditate.colorTheme }}
+							style={{ color: meditateData.colorTheme }}
 							className='text-center font-pbold text-[55px]'>
 							{formatTime(timerState.timeInSeconds)}
 						</Text>
@@ -117,16 +116,20 @@ const Meditate = () => {
 							onPress={toggleTimer}
 							className='w-[40px] h-[40px] flex justify-center items-center rounded-full bg-white'>
 							<Text
-								style={{ color: meditate.colorTheme }}
+								style={{ color: meditateData.colorTheme }}
 								className='text-center font-medium font-plight  '>
 								{timerState.isRunning ? (
 									<FontAwesome6
 										name='pause'
 										size={15}
-										color={meditate.colorTheme}
+										color={meditateData.colorTheme}
 									/>
 								) : (
-									<Fontisto name='play' size={15} color={meditate.colorTheme} />
+									<Fontisto
+										name='play'
+										size={15}
+										color={meditateData.colorTheme}
+									/>
 								)}
 							</Text>
 						</Pressable>
@@ -134,12 +137,12 @@ const Meditate = () => {
 							onPress={resetTimer}
 							className={` bg-white rounded-full w-[40px] h-[40px] flex justify-center items-center`}>
 							<Text
-								style={{ color: meditate.colorTheme }}
-								className='text-slate-100 font-plight'>
+								style={{ color: meditateData.colorTheme }}
+								className='font-plight'>
 								<MaterialIcons
 									name='replay'
 									size={18}
-									color={meditate.colorTheme}
+									color={meditateData.colorTheme}
 								/>
 							</Text>
 						</Pressable>
@@ -149,7 +152,7 @@ const Meditate = () => {
 			<View className='absolute bottom-10 w-full'>
 				<Pressable className='p-4 bg-transparent bg-white border-white border rounded-lg flex flex-row justify-center items-center w-[80%] mx-auto'>
 					<Text
-						style={{ color: meditate.colorTheme }}
+						style={{ color: meditateData.colorTheme }}
 						className='font-psemibold'>
 						Adjust Duration
 					</Text>
