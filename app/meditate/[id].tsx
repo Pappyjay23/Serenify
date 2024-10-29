@@ -1,14 +1,15 @@
-import { View, Text, Pressable, Image } from "react-native";
-import React, { useState, useEffect, useCallback } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { useLocalSearchParams, useRouter } from "expo-router";
 import { meditateCategory } from "@/constants/MeditationData";
-import Fontisto from "@expo/vector-icons/Fontisto";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import Fontisto from "@expo/vector-icons/Fontisto";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import * as Progress from "react-native-progress";
+import { useFocusEffect } from "@react-navigation/native";
 import { Audio } from "expo-av";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Image, Modal, Pressable, Text, TextInput, View } from "react-native";
+import * as Progress from "react-native-progress";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface TimerState {
 	isRunning: boolean;
@@ -28,12 +29,21 @@ const Meditate = () => {
 	const { id } = useLocalSearchParams();
 	const meditateData = meditateCategory[Number(id) - 1];
 
+	const [sound, setSound] = useState<Audio.Sound | null>(null);
+	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+	const [completionModalVisible, setCompletionModalVisible] =
+		useState<boolean>(false);
+	const [timerDurationInSeconds, setTimerDurationInSeconds] =
+		useState<number>(10);
+
 	const [timerState, setTimerState] = useState<TimerState>({
 		isRunning: false,
-		timeInSeconds: 60, // Default time in seconds
+		timeInSeconds: timerDurationInSeconds, // Default time in seconds
 	});
 
-	const [sound, setSound] = useState<Audio.Sound | null>(null);
+	const toggleModal = () => {
+		setIsModalVisible(!isModalVisible);
+	};
 
 	// Load audio when the component mounts
 	useEffect(() => {
@@ -47,10 +57,22 @@ const Meditate = () => {
 		loadSound();
 
 		return () => {
-			// Unload the sound when component unmounts
-			sound && sound.unloadAsync();
+			if (sound) {
+				sound.stopAsync();
+				sound.unloadAsync();
+			}
 		};
 	}, [meditateData.audio]);
+
+	useFocusEffect(
+		useCallback(() => {
+			return () => {
+				if (sound) {
+					sound.stopAsync();
+				}
+			};
+		}, [sound])
+	);
 
 	// Play, pause, and stop audio based on timer state
 	const handleAudioPlayback = useCallback(async () => {
@@ -70,9 +92,9 @@ const Meditate = () => {
 	const resetTimer = useCallback(() => {
 		setTimerState({
 			isRunning: false,
-			timeInSeconds: 60,
+			timeInSeconds: timerDurationInSeconds,
 		});
-	}, []);
+	}, [timerDurationInSeconds]);
 
 	const toggleTimer = useCallback(() => {
 		setTimerState((prev) => ({
@@ -105,17 +127,31 @@ const Meditate = () => {
 
 	const handleTimerComplete = useCallback(() => {
 		sound && sound.stopAsync();
-		console.log("Meditation complete!");
+
+		setCompletionModalVisible(true);
+
+		setTimeout(() => {
+			setCompletionModalVisible(false);
+		}, 3000);
 	}, []);
 
 	useEffect(() => {
 		if (timerState.timeInSeconds === 0) {
 			handleTimerComplete();
+			setTimerState({
+				isRunning: false,
+				timeInSeconds: timerDurationInSeconds,
+			});
 		}
 	}, [timerState.timeInSeconds, handleTimerComplete]);
 
 	// Calculate progress percentage
-	const progress = (60 - timerState.timeInSeconds) / 60;
+	const progress = useMemo(() => {
+		return (
+			(timerDurationInSeconds - timerState.timeInSeconds) /
+			timerDurationInSeconds
+		);
+	}, [timerDurationInSeconds, timerState.timeInSeconds]);
 
 	return (
 		<View
@@ -198,8 +234,93 @@ const Meditate = () => {
 					</View>
 				</View>
 			</SafeAreaView>
-			<View className='absolute bottom-10 w-full'>
-				<Pressable className='p-4 bg-transparent bg-white border-white border rounded-lg flex flex-row justify-center items-center w-[80%] mx-auto'>
+
+			{/* Completion Modal */}
+			<Modal
+				visible={completionModalVisible}
+				animationType='slide'
+				onRequestClose={() => setCompletionModalVisible(false)}>
+				<View className='flex-1 justify-center items-center bg-black/90'>
+					<View
+						style={{ backgroundColor: meditateData.colorTheme }}
+						className='rounded-lg p-6 w-[80%] flex flex-col justify-center items-center'>
+						<Ionicons name='checkmark-circle' size={50} color='#fff' />
+						<Text className='text-2xl text-white font-hlight text-center mt-4'>
+							Meditation Complete 🎉
+						</Text>
+						<Text className='text-center text-white font-hlight mt-2'>
+							Great job on completing your session!
+						</Text>
+						<Pressable
+							onPress={() => setCompletionModalVisible(false)}
+							className='mt-6 py-2 px-4 bg-gray-300 rounded-md'>
+							<Text
+								style={{ color: meditateData.colorTheme }}
+								className='font-hmedium'>
+								Close
+							</Text>
+						</Pressable>
+					</View>
+				</View>
+			</Modal>
+
+			{/* Adjust Duration Modal */}
+			<Modal
+				visible={isModalVisible}
+				animationType='fade'
+				transparent={true}
+				onRequestClose={toggleModal}>
+				<View className='flex-1 bg-black/90 justify-center items-center'>
+					<View
+						style={{ backgroundColor: meditateData.colorTheme }}
+						className='bg-white rounded-lg p-6 w-[80%]'>
+						<Text className='text-white text-[20px] tracking-tighter font-hmedium text-center mb-4'>
+							Adjust Timer Duration
+						</Text>
+						<View className='flex-row items-center justify-between mb-4'>
+							<Text className='text-white font-hlight'>
+								Duration (minutes):
+							</Text>
+							<TextInput
+								value={
+									isNaN(timerDurationInSeconds)
+										? "0"
+										: Math.floor(timerDurationInSeconds / 60).toString()
+								}
+								onChangeText={(text) =>
+									setTimerDurationInSeconds(parseInt(text) * 60)
+								}
+								keyboardType='numeric'
+								className='bg-gray-200 rounded-md px-3 py-2 w-20 text-center font-hlight'
+							/>
+						</View>
+						<View className='flex-row justify-end space-x-4'>
+							<Pressable
+								onPress={toggleModal}
+								className='py-2 px-4 bg-gray-300 rounded-md'>
+								<Text className='text-gray-700 font-hlight'>Cancel</Text>
+							</Pressable>
+							<Pressable
+								onPress={() => {
+									setTimerState({
+										isRunning: false,
+										timeInSeconds: timerDurationInSeconds,
+									});
+									toggleModal();
+								}}
+								className='py-2 px-4 bg-black rounded-md'>
+								<Text className='text-white font-hlight'>Save</Text>
+							</Pressable>
+						</View>
+					</View>
+				</View>
+			</Modal>
+
+			{/* Adjust Duration Button */}
+			<View className='absolute bottom-10 w-full z-[20]'>
+				<Pressable
+					onPress={toggleModal}
+					className='p-4 bg-transparent bg-white border-white border rounded-lg flex flex-row justify-center items-center w-[80%] mx-auto'>
 					<Text
 						style={{ color: meditateData.colorTheme }}
 						className='font-psemibold'>
