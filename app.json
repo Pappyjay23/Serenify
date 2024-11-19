@@ -4,12 +4,12 @@
     "slug": "Serenify",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/serenify-icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/meditation-pose.png",
-      "resizeMode": "contain",
+      "image": "./assets/images/splash-screen.png",
+      "resizeMode": "cover",
       "backgroundColor": "#263238"
     },
     "ios": {
@@ -17,20 +17,27 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/images/serenify-icon.png",
+        "backgroundColor": "#263238"
+      },
+      "package": "com.pappyjay23.Serenify"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/serenify-icon.png"
     },
     "plugins": [
       "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6e353324-86a9-4748-a11f-2a1a3c598e8f"
+      }
+    },
+    "owner": "pappyjay23"
   }
 }

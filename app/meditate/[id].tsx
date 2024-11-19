@@ -245,7 +245,7 @@ const Meditate = () => {
 						style={{ backgroundColor: meditateData.colorTheme }}
 						className='rounded-lg p-6 w-[80%] flex flex-col justify-center items-center'>
 						<Ionicons name='checkmark-circle' size={50} color='#fff' />
-						<Text className='text-2xl text-white font-hlight text-center mt-4'>
+						<Text className='text-2xl text-white font-hmedium text-center mt-4'>
 							Meditation Complete 🎉
 						</Text>
 						<Text className='text-center text-white font-hlight mt-2'>
@@ -253,7 +253,7 @@ const Meditate = () => {
 						</Text>
 						<Pressable
 							onPress={() => setCompletionModalVisible(false)}
-							className='mt-6 py-2 px-4 bg-gray-300 rounded-md'>
+							className='mt-6 py-2 px-4 bg-white rounded-md'>
 							<Text
 								style={{ color: meditateData.colorTheme }}
 								className='font-hmedium'>
@@ -287,17 +287,18 @@ const Meditate = () => {
 										? "0"
 										: Math.floor(timerDurationInSeconds / 60).toString()
 								}
-								onChangeText={(text) =>
-									setTimerDurationInSeconds(parseInt(text) * 60)
-								}
+								onChangeText={(text) => {
+									const minutes = text === "" ? 0 : parseInt(text);
+									setTimerDurationInSeconds(minutes * 60);
+								}}
 								keyboardType='numeric'
-								className='bg-gray-200 rounded-md px-3 py-2 w-20 text-center font-hlight'
+								className='bg-white rounded-md px-3 py-2 w-20 text-center font-hlight'
 							/>
 						</View>
 						<View className='flex-row justify-end space-x-4'>
 							<Pressable
 								onPress={toggleModal}
-								className='py-2 px-4 bg-gray-300 rounded-md'>
+								className='py-2 px-4 bg-white rounded-md'>
 								<Text className='text-gray-700 font-hlight'>Cancel</Text>
 							</Pressable>
 							<Pressable
