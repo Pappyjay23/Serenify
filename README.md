@@ -1,50 +1,59 @@
-# Welcome to your Expo app 👋
+<div align="center">
+	<h1> Serenify 🧘‍♂️</h1>
+   <p>A seamless and user-friendly mobile application that combines guided meditation and daily affirmation quotes to inspire and uplift users. Built with React Native, Expo, NativeWind, and Expo Router, this app provides a smooth experience for mindfulness practices and positive reinforcement.</p>
+</div>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Snapshot 📸
+![Serenify Screen 1](https://github.com/user-attachments/assets/7c3980cf-8f4f-44bc-bf58-dbc27c5ceb74)
+![Serenify Screen 2](https://github.com/user-attachments/assets/4000bc86-7d3b-4b9c-a41a-55b84cffc6eb)
 
-## Get started
+## Features 🎉
+#### Meditation Module
+- Guided Meditation: Choose from a variety of meditation categories with built-in timers and custom audio tracks.
+- Adjustable Timers: Customize the duration of the meditation to suit your schedule.
+- Color Themes: Personalized color themes for a calming visual experience
 
-1. Install dependencies
+#### Affirmation Quotes Module
+- Daily Affirmations: Receive a curated list of uplifting and inspiring affirmations.
 
-   ```bash
-   npm install
-   ```
+## Tech Stack ✨
 
-2. Start the app
+- [React Native](https://reactnative.dev/) - Cross-platform app development for Android and iOS.
+- [Expo](https://expo.dev/) - Simplified development, debugging, and deployment.
+- [NativeWind](https://nativewind.dev/) - Utility-first styling for React Native using Tailwind CSS.
 
-   ```bash
-    npx expo start
-   ```
+## How to run locally 💻
 
-In the output, you'll find options to open the app in a
+Follow these steps to run Titan on your local machine.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### Clone this repository
 
 ```bash
-npm run reset-project
+git clone https://github.com/Pappyjay23/Serenify.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Navigate to the directory
 
-## Learn more
+```bash
+cd Serenify
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### Install Dependencies
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npm install
+```
 
-## Join the community
+### Run
 
-Join our community of developers creating universal apps.
+Run the development server to view the app.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npm start
+```
+
+Use the Expo Go app to scan the QR code and test on your device.
+
+## Credits ✍
+
+Implementation by [@Pappyjay23](https://github.com/Pappyjay23)
